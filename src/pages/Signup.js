@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Signup() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [gender, setGender] = useState('');
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('/api/signup', { name, email, password, gender });
-      history.push('/login');
+      await axios.post('http://localhost:5000/api/signup', { name, email, password, gender });
+      navigate('/login');
     } catch (err) {
       console.error(err);
     }
   };
 
   return (
-    <div className="container">
-      <h2>Sign Up</h2>
+    <div className="container w-75">
+      <h2>Sign Up here</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Name</label>
@@ -44,7 +44,8 @@ function Signup() {
             <option value="Other">Other</option>
           </select>
         </div>
-        <button type="submit" className="btn btn-primary">Sign Up</button>
+        <button type="submit" className="btn btn-primary mt-2">Sign Up</button>
+        <p className='mt-2'>Already have an Account? <Link to='/login'>Login here</Link></p>
       </form>
     </div>
   );
